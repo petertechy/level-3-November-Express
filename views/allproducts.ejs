@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+</head>
+<body>
+    <h1>All Products</h1>
+    <% allproducts.forEach((product, index) => { %>
+     <div>
+        <p><%= index + 1 %>.</p>
+        <h3><%= product.product_name %></h3>
+        <p><%= product.product_price %></p>
+        <p><%= product.product_quantity %></p>
+        <form action="/delete/<%= product._id %>" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+      </form>
+
+      <form action="/edit/<%= product._id %>" method="GET" style="display:inline;">
+        <button type="submit">Edit</button>
+      </form>
+     </div>
+    <% }) %>
+</body>
+</html>
