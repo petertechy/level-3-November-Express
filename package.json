@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "This is my first backend class",
   "main": "index.js",
-  "scripts": {
-    "test": "test.js",
-    "dev": "nodemon index.js",
-    "build": "echo 'No build step required'"
-  },
   "keywords": [
     "backend",
     "node",
