@@ -24,6 +24,18 @@ UserSchema.pre("save", function(next){
   })
 })
 
+UserSchema.methods.validatePassword = function(password,callback){
+  console.log(password, this.password)
+  bcrypt.compare(password, this.password, (err,same)=>{
+    if(!err){
+      console.log(same)
+      callback(err,same)
+    }else{
+      next()
+    }
+  })
+}
+
 //User Model
 const UserModel = mongoose.model("User_Data", UserSchema, "User_Data");
 module.exports = UserModel

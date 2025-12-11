@@ -3,7 +3,7 @@ const router = express.Router();
 const UserModel = require("../models/user.model");
 const endpoint = require("../utils/endpoint");
 const { addProduct, fetchProduct, deleteProduct, editProduct, updateProduct, productDisplay } = require("../controllers/product.controller");
-const { addUser, authenticateUser } = require("../controllers/user.controller");
+const { addUser, authenticateUser, getDashboard } = require("../controllers/user.controller");
 
 const customers = [];
 
@@ -49,6 +49,7 @@ router.get("/sign-up", (req, res) => {
 
 router.post("/register", addUser);
 router.post("/signin", authenticateUser)
+router.get("/user-dashboard", getDashboard )
 
 router.get("/dashboard", (req, res) => {
   res.render("dashboard", { customers });
