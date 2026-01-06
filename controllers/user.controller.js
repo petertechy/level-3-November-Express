@@ -1,6 +1,8 @@
 const UserModel = require("../models/user.model");
 const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken")
+const nodemailer = require("nodemailer")
+const registrationEmail = require("../emails/registrationEmails")
 
 const addUser = (req, res) => {
   let form = new userModel(req.body);
@@ -8,6 +10,29 @@ const addUser = (req, res) => {
     .save()
     .then(() => {
       console.log("User saved");
+         let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      let mailOptions = {
+        from: '"Youtube App" <petertechy01@gmail.com>',
+        to: [req.body.email, "lizzytod@gmail.com"],
+        subject: "🎉 Welcome to Youtube App – Registration Successful!",
+        html: registrationEmail(req.body.firstname, req.body.lastname)
+        ,
+      };
+
+       transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
       res.send({ status: true, message: "User Added Successfully" });
     })
     .catch((error) => {
