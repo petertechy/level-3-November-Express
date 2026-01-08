@@ -3,6 +3,13 @@ const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
 const registrationEmail = require("../emails/registrationEmails")
+const cloudinary = require("cloudinary")
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+})
 
 const addUser = (req, res) => {
   let form = new userModel(req.body);
@@ -89,4 +96,18 @@ const getDashboard = (req,res) =>{
   })
 }
 
-module.exports = { addUser, authenticateUser, getDashboard };
+const uploadFile = (req,res) =>{
+  console.log(req.body.file)
+  let myfile = req.body.file
+  cloudinary.v2.uploader.upload(myfile, (err, result)=>{
+    if(err){
+      console.log("File could not be uploaded")
+    }else{
+      console.log(result)
+      let imageUrl = result.secure_url
+      res.send({message: "Image Uploaded Successfully", status: true, imageUrl})
+    }
+  })
+}
+
+module.exports = { addUser, authenticateUser, getDashboard, uploadFile };
