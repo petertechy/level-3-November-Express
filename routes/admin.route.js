@@ -3,7 +3,7 @@ const router = express.Router();
 const UserModel = require("../models/user.model");
 const endpoint = require("../utils/endpoint");
 const { addProduct, fetchProduct, deleteProduct, editProduct, updateProduct, productDisplay } = require("../controllers/product.controller");
-const { addUser, authenticateUser, getDashboard } = require("../controllers/user.controller");
+const { addUser, authenticateUser, getDashboard, uploadFile } = require("../controllers/user.controller");
 
 const customers = [];
 
@@ -85,5 +85,7 @@ router.get("/edit/:id", editProduct);
 
 // Handle product update
 router.post("/edit/:id", updateProduct);
+
+router.post("/upload", uploadFile)
 
 module.exports = router;
